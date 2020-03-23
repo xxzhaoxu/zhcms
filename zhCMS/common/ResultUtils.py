@@ -1,14 +1,20 @@
 import json
-
+from zhCMS.common.AESUtils import encrypt_oracle
 from django.core import serializers
+import django_redis
 
 
-def success(obj):
+def success(*obj):
+    token = ''
+    if len(obj) == 2:
+        token = obj[1]
     try:
-        return json.dumps({'code': 200, 'data': obj, 'msg': 'ok', 'token': ''})
+        re = json.dumps({'code': 200, 'data': obj[0], 'msg': 'ok', 'token': token})
+        return re
     except:
-        return json.dumps(
-            {'code': 200, 'data': json.loads(serializers.serialize("json", obj)), 'msg': 'ok', 'token': ''})
+        re = json.dumps(
+            {'code': 200, 'data': json.loads(serializers.serialize("json", obj[0])), 'msg': 'ok', 'token': token})
+        return re
 
 
 def fail(code, msg):

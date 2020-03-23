@@ -88,7 +88,7 @@ class Job(models.Model):
     address = models.CharField(max_length=255)  # 公司地址
     create_time = models.IntegerField(null=True)  # 创建时间
     update_time = models.IntegerField(null=True)  # 更新时间
-    valid_time = models.IntegerField(null=True,)  # 有效时间
+    valid_time = models.IntegerField(null=True, )  # 有效时间
     is_show = models.CharField(max_length=1, null=True)  # 是否显示 0不显示 1 显示
 
     def _toJSON(self):
@@ -113,4 +113,32 @@ class Job(models.Model):
             'valid_time': self.valid_time,
             'is_show': self.is_show,
             'update_time': self.update_time
+        }
+
+
+class Aptitudes(models.Model):
+    id = models.AutoField(primary_key=True)
+    name = models.CharField(max_length=100)
+    create_time = models.IntegerField()
+
+    def _toJSON(self):
+        return {
+            'id': self.id,
+            'name': self.name,
+            'create_time': self.create_time
+        }
+
+
+class Banner(models.Model):
+    id = models.AutoField(primary_key=True)
+    urls = models.CharField(max_length=255)
+    name = models.CharField(max_length=255, null=True)
+    create_time = models.IntegerField()
+
+    def _toJSON(self):
+        return {
+            'id': self.id,
+            'urls': self.urls,
+            'name': self.name,
+            'create_time': self.create_time
         }

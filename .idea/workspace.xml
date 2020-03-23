@@ -1,7 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="a9a2df39-2d88-4272-95b6-d062baf04372" name="Default Changelist" comment="" />
+    <list default="true" id="a9a2df39-2d88-4272-95b6-d062baf04372" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/.idea/codeStyles/codeStyleConfig.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/zhCMS/common/AESUtils.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/zhdb/migrations/0010_aptitudes.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/zhdb/migrations/0011_banner.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/zhdb/migrations/0012_banner_name.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/zhCMS/common/ResultUtils.py" beforeDir="false" afterPath="$PROJECT_DIR$/zhCMS/common/ResultUtils.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/zhCMS/common/middleware.py" beforeDir="false" afterPath="$PROJECT_DIR$/zhCMS/common/middleware.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/zhCMS/settings.py" beforeDir="false" afterPath="$PROJECT_DIR$/zhCMS/settings.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/zhCMS/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/zhCMS/urls.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/zhCMS/view.py" beforeDir="false" afterPath="$PROJECT_DIR$/zhCMS/view.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/zhdb/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/zhdb/models.py" afterDir="false" />
+    </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -18,8 +32,16 @@
       </list>
     </option>
   </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
   <component name="ProjectId" id="1ZAIBiMx6jaq8WWAUv4FH9MZTTy" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true">
+    <ConfirmationsSetting value="2" id="Add" />
+  </component>
   <component name="PropertiesComponent">
+    <property name="ASKED_ADD_EXTERNAL_FILES" value="true" />
+    <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="node.js.detected.package.eslint" value="true" />
     <property name="node.js.detected.package.tslint" value="true" />
@@ -41,7 +63,29 @@
       </list>
     </option>
   </component>
-  <component name="RunManager">
+  <component name="RunManager" selected="Django server.zhCMS">
+    <configuration name="AESUtils" type="PythonConfigurationType" factoryName="Python" temporary="true">
+      <module name="zhCMS" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/zhCMS/common" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/zhCMS/common/AESUtils.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
     <configuration name="zhCMS" type="Python.DjangoServer" factoryName="Django server">
       <module name="zhCMS" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -57,15 +101,24 @@
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <option name="launchJavascriptDebuger" value="false" />
       <option name="port" value="8000" />
-      <option name="host" value="192.168.0.111" />
+      <option name="host" value="0.0.0.0" />
       <option name="additionalOptions" value="" />
-      <option name="browserUrl" value="http://192.168.0.111:8000/" />
+      <option name="browserUrl" value="http://127.0.0.1:8000/" />
       <option name="runTestServer" value="false" />
       <option name="runNoReload" value="false" />
       <option name="useCustomRunCommand" value="false" />
       <option name="customRunCommand" value="" />
       <method v="2" />
     </configuration>
+    <list>
+      <item itemvalue="Django server.zhCMS" />
+      <item itemvalue="Python.AESUtils" />
+    </list>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Python.AESUtils" />
+      </list>
+    </recent_temporary>
   </component>
   <component name="SvnConfiguration">
     <configuration />
@@ -78,11 +131,42 @@
       <option name="presentableId" value="Default" />
       <updated>1584275337937</updated>
       <workItem from="1584275500838" duration="5630000" />
-      <workItem from="1584406179617" duration="40938000" />
+      <workItem from="1584406179617" duration="66256000" />
+      <workItem from="1584758638438" duration="1836000" />
     </task>
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="1" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State>
+              <option name="COLUMN_ORDER" />
+            </State>
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/zhCMS/common/middleware.py</url>
+          <line>14</line>
+          <option name="timeStamp" value="41" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
+  </component>
+  <component name="com.intellij.coverage.CoverageDataManagerImpl">
+    <SUITE FILE_PATH="coverage/zhCMS$AESUtils.coverage" NAME="AESUtils Coverage Results" MODIFIED="1584588641403" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/zhCMS/common" />
   </component>
 </project>

@@ -1,7 +1,11 @@
+import django_redis
 from django.http import HttpResponse
-from zhdb.models import User, BaseInfo, News, Job
+from zhdb.models import User, BaseInfo, News, Job, Aptitudes, Banner
 from zhCMS.common.ResultUtils import success, fail, page_handler
 from zhCMS.common.HttpUtils import JSONResponse
+from zhCMS.common.AESUtils import encrypt_oracle
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
+import time
 
 
 def hello(request):
@@ -9,19 +13,35 @@ def hello(request):
 
 
 def login(request):
-    account = request.GET['account']
-    pswd = request.GET['pswd']
-    try:
-        return JSONResponse(success(User.objects.get(account=account, pswd=pswd)._toJSON()))
-    except:
-        return HttpResponse(fail(400, '登录失败'))
+    if 'POST' == request.method:
+        account = request.POST.get('account')
+        pswd = request.POST.get('pswd')
+        u = User.objects.get(account=account, pswd=pswd)
+        # token = encrypt_oracle(str(u.id) + '_' + u.account)
+        try:
+            if u is not None:
+                token = encrypt_oracle(str(u.id) + '_' + u.account).replace('\n', '')
+                conn = django_redis.get_redis_connection()
+                conn.set(u.id, str(token))
+                return JSONResponse(success(u._toJSON(), token))
+        except:
+            return JSONResponse(fail(400, '登录失败'))
+    else:
+        return JSONResponse(fail(500, '请求方式错误'))
 
 
 def find_all_user(request):
-    try:
-        return JSONResponse(success(User.objects.all()))
-    except:
-        return JSONResponse(success([]))
+    if 'POST' == request.method:
+        page_size = request.POST.get('pageSize')
+        page_index = request.POST.get('pageIndex')
+        try:
+            user_list = User.objects.all()
+            for u in user_list:
+                u.pswd = ''
+
+            return JSONResponse(success(user_list))
+        except:
+            return JSONResponse(success([]))
 
 
 def find_base_info(request):
@@ -222,18 +242,88 @@ def update_job(request):
 
 def find_jobs(request):
     if 'POST' == request.method:
-        from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
         page_size = request.POST.get('pageSize', 3)
         page_index = request.POST.get('pageIndex', 1)
         job_list = Job.objects.all()
         count = Job.objects.count()
         paginator = Paginator(job_list, page_size)
         try:
-            list = paginator.page(int(page_index))
+            job_list = paginator.page(int(page_index))
         except:
-            list = []
-            pass
-        return JSONResponse(page_handler(count, paginator.num_pages, int(page_index), list))
+            job_list = []
+        return JSONResponse(page_handler(count, paginator.num_pages, int(page_index), job_list))
     else:
         return JSONResponse(fail(500, '请求方式错误'))
 
+
+def find_jobs_by_id(request):
+    if 'POST' == request.method:
+        pk = request.POST.get('id')
+        return JSONResponse(success(Job.objects.filter(id=pk)))
+    else:
+        return JSONResponse(fail(500, '请求方式错误'))
+
+
+'''
+保存资质
+'''
+
+
+def save_aptitudes(request):
+    if 'POST' == request.method:
+        name = request.POST.get('name', '')
+        if '' != name:
+            if Aptitudes.objects.filter(name=name).__len__() == 0:
+                aptitudes = Aptitudes(name=name, create_time=time.time())
+                aptitudes.save()
+                return JSONResponse(success(aptitudes._toJSON()))
+            else:
+                return JSONResponse(fail(400, '保存失败'))
+        else:
+            return JSONResponse(fail(400, '参数错误'))
+    else:
+        return JSONResponse(fail(500, '请求方式错误'))
+
+
+'''
+查询所有资质
+'''
+
+
+def find_aptitudes(request):
+    if 'POST' == request.method:
+        try:
+            return JSONResponse(success(Aptitudes.objects.all()))
+        except:
+            return JSONResponse(success([]))
+    else:
+        return JSONResponse(fail(500, '请求方式错误'))
+
+
+def save_update_banner(request):
+    if 'POST' == request.method:
+        pk = request.POST.get('id')
+        urls = request.POST.get('urls')
+        name = request.POST.get('name')
+        create_time = request.POST.get('create_time', time.time())
+        banner = Banner(id=pk, name=name, urls=urls, create_time=create_time)
+        banner.save()
+        return JSONResponse(success(banner._toJSON()))
+    else:
+        return JSONResponse(fail(500, '请求方式错误'))
+
+
+def find_banner(request):
+    if 'GET' == request.method:
+        pk = request.GET['id']
+        banner = Banner.objects.get(id=pk)
+        return JSONResponse(success(banner._toJSON()))
+    else:
+        return JSONResponse(fail(500, '请求方式错误'))
+
+
+def find_all_banner(request):
+    if 'POST' == request.method:
+        return JSONResponse(success(Banner.objects.all()))
+    else:
+        return JSONResponse(fail(500, '请求方式错误'))

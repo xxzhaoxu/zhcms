@@ -28,4 +28,10 @@ urlpatterns = [
     url(r'^save_job$', view.add_job),
     url(r'^update_job$', view.update_job),
     url(r'^find_jobs$', view.find_jobs),
+    url(r'^find_jobs_id$', view.find_jobs_by_id),
+    url(r'^save_aptitudes$', view.save_aptitudes),
+    url(r'^find_aptitudes$', view.find_aptitudes),
+    url(r'^save_update_banner$', view.save_update_banner),
+    url(r'^find_banner$', view.find_banner),
+    url(r'^find_all_banner$', view.find_all_banner),
 ]
