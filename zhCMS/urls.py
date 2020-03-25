@@ -34,4 +34,9 @@ urlpatterns = [
     url(r'^save_update_banner$', view.save_update_banner),
     url(r'^find_banner$', view.find_banner),
     url(r'^find_all_banner$', view.find_all_banner),
+    url(r'^save_product$', view.save_product),
+    url(r'^del_product$', view.del_product),
+    url(r'^find_product$', view.find_product),
+    url(r'^find_product_by_id$', view.find_product_by_id),
+    url(r'^upload_file_access$', view.upload_file_access),
 ]

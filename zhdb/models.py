@@ -3,7 +3,7 @@ from django.db import models
 """
 python manage.py migrate   # 创建表结构
 
-python manage.py makemigrations    # 让 Django 知道我们在我们的模型有一些变更
+python manage.py makemigrations zhdb   # 让 Django 知道我们在我们的模型有一些变更
 python manage.py migrate  
 """
 
@@ -141,4 +141,23 @@ class Banner(models.Model):
             'urls': self.urls,
             'name': self.name,
             'create_time': self.create_time
+        }
+
+
+class Product(models.Model):
+    id = models.AutoField(primary_key=True)
+    name = models.CharField(max_length=255)
+    content = models.TextField()
+    img_urls = models.CharField(max_length=255)
+    create_time = models.IntegerField()
+    banner_id = models.IntegerField()
+
+    def _toJSON(self):
+        return {
+            'id': self.id,
+            'name': self.name,
+            'content': self.content,
+            'img_urls': self.img_urls,
+            'create_time': self.create_time,
+            'banner_id': self.banner_id,
         }

@@ -1,11 +1,11 @@
 import django_redis
-from django.http import HttpResponse
-from zhdb.models import User, BaseInfo, News, Job, Aptitudes, Banner
+from zhdb.models import User, BaseInfo, News, Job, Aptitudes, Banner, Product
 from zhCMS.common.ResultUtils import success, fail, page_handler
 from zhCMS.common.HttpUtils import JSONResponse
 from zhCMS.common.AESUtils import encrypt_oracle
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 import time
+import oss2
 
 
 def hello(request):
@@ -81,7 +81,6 @@ def update_base_info(request):
 
 def save_update_news(request):
     if 'POST' == request.method:
-        import time
         title = request.POST.get('title', '')
         content = request.POST.get('content', '')
         author = request.POST.get('author', '')
@@ -100,8 +99,10 @@ def save_update_news(request):
 
 def find_news(request):
     if 'POST' == request.method:
+        # print(request.POST['type'])
+        print(request.POST.get('type'))
         n_type = request.POST.get('type', '1')
-        return JSONResponse(success(News.objects.filter(n_type=n_type).order_by('-create_time')))
+        return JSONResponse(success(News.objects.filter(n_type=n_type, is_show='1').order_by('-create_time')))
     else:
         return JSONResponse(fail(500, "请求方式错误"))
 
@@ -121,7 +122,7 @@ def delete_news(request):
         except:
             return JSONResponse(fail(400, '参数错误'))
         if news is not None:
-            news.is_show = request.POST.get('is_show', '1')
+            news.is_show = request.POST.get('is_show', '0')
             news.save()
         return JSONResponse(success(news._toJSON()))
     else:
@@ -327,3 +328,68 @@ def find_all_banner(request):
         return JSONResponse(success(Banner.objects.all()))
     else:
         return JSONResponse(fail(500, '请求方式错误'))
+
+
+def save_product(request):
+    if 'POST' == request.method:
+        pk = request.POST.get('id')
+        name = request.POST.get('name')
+        content = request.POST.get('content')
+        img_urls = request.POST.get('img_urls')
+        banner_id = request.POST.get('banner_id')
+        create_time = request.POST.get('create_time', time.time())
+        p = Product(id=pk, name=name, content=content, img_urls=img_urls, banner_id=banner_id, create_time=create_time)
+        p.save()
+        return JSONResponse(success(p._toJSON()))
+    else:
+        return JSONResponse(fail(500, '请求方式错误'))
+
+
+def del_product(request):
+    if 'POST' == request.method:
+        try:
+            p = Product.objects.get(id=request.POST.get('id', 0))
+            p.delete()
+        except:
+            return JSONResponse(fail(400, '删除失败'))
+        return JSONResponse(success(None))
+    else:
+        return JSONResponse(fail(500, '请求方式错误'))
+
+
+def find_product(request):
+    if 'GET' == request.method:
+        page_index = request.GET['pageIndex']
+        page_size = request.GET['pageSize']
+        banner_id = request.GET['banner_id']
+        product_count = Product.objects.count()
+        product_list = Product.objects.filter(banner_id=banner_id)
+        paginator = Paginator(product_list, page_size)
+        try:
+            product_list = paginator.page(int(page_index))
+        except:
+            product_list = []
+        return JSONResponse(page_handler(product_count, paginator.num_pages, int(page_index), product_list))
+    else:
+        return JSONResponse(fail(500, '请求方式错误'))
+
+
+def find_product_by_id(request):
+    if 'POST' == request.method:
+        try:
+            p = Product.objects.get(id=request.POST.get('id'))
+        except:
+            return JSONResponse(success(None))
+        return JSONResponse(success(p._toJSON()))
+    else:
+        return JSONResponse(fail(500, '请求方式错误'))
+
+
+def upload_file_access(request):
+    access_key_secret = '5X4UABmuPea7ezcRZJlaJ2jrzDgJa4'
+    AccessKey_id = 'LTAI4Fe3jW3nuySSKkGPVC6Z'
+    auth = oss2.Auth(AccessKey_id, access_key_secret)
+    bucket = oss2.Bucket(auth, 'http://oss-cn-hangzhou.aliyuncs.com', 'zhenh')
+    # bucket.create_bucket(oss2.models.BUCKET_ACL_PRIVATE)
+    print(bucket.sign_url('GET', '<yourObjectName>', 60))
+    return JSONResponse(success(bucket.sign_url('GET', 'zhenh', 60)))
