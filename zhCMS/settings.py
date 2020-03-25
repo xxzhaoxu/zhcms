@@ -121,8 +121,10 @@ DATABASES = {
         'ENGINE': 'django.db.backends.mysql',  # 或者使用 mysql.connector.django
         'NAME': 'zh_cms',
         'USER': 'root',
-        'PASSWORD': 'zhaoxuniubi',
-        'HOST': 'localhost',
+        # 'PASSWORD': 'zhaoxuniubi',
+        'PASSWORD': 'jinxu2019!',
+        # 'HOST': 'localhost',
+        'HOST': 'rm-uf63067964237hb6j2o.mysql.rds.aliyuncs.com',
         'PORT': '3306',
     }
 }
