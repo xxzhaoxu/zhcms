@@ -16,9 +16,8 @@ def login(request):
     if 'POST' == request.method:
         account = request.POST.get('account')
         pswd = request.POST.get('pswd')
-        u = User.objects.get(account=account, pswd=pswd)
-        # token = encrypt_oracle(str(u.id) + '_' + u.account)
         try:
+            u = User.objects.get(account=account, pswd=pswd)
             if u is not None:
                 token = encrypt_oracle(str(u.id) + '_' + u.account).replace('\n', '')
                 conn = django_redis.get_redis_connection()
