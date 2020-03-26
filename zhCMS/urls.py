@@ -14,8 +14,12 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.conf.urls import url
+from django.contrib import admin
 from . import view
+
+
 urlpatterns = [
+    url(r'^admin/', admin.site.urls),
     url(r'^$', view.hello),
     url(r'^login$', view.login),
     url(r'^find_all_user$', view.find_all_user),
@@ -25,7 +29,7 @@ urlpatterns = [
     url(r'^find_news$', view.find_news),
     url(r'^find_news_by_id$', view.find_news_by_id),
     url(r'^delete_news$', view.delete_news),
-    url(r'^save_job$', view.add_job),
+    url(r'^add_job$', view.add_job),
     url(r'^update_job$', view.update_job),
     url(r'^find_jobs$', view.find_jobs),
     url(r'^find_jobs_id$', view.find_jobs_by_id),
@@ -34,6 +38,7 @@ urlpatterns = [
     url(r'^save_update_banner$', view.save_update_banner),
     url(r'^find_banner$', view.find_banner),
     url(r'^find_all_banner$', view.find_all_banner),
+    url(r'^del_banner$', view.del_banner),
     url(r'^save_product$', view.save_product),
     url(r'^del_product$', view.del_product),
     url(r'^find_product$', view.find_product),

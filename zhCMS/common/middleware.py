@@ -14,7 +14,7 @@ except ImportError:
 class SimpleMiddleware(MiddlewareMixin):
     def process_request(self, request):
         path = request.path
-        if '/login' == path or '/' == path or re.match(r'^/find', path) is not None:
+        if re.match(r'^[/admin|/find｜/login｜/]', path) is not None:
             pass
         else:
             token = request.META.get("HTTP_TOKEN")
@@ -29,4 +29,3 @@ class SimpleMiddleware(MiddlewareMixin):
                     return JSONResponse(fail(401, '用户验证失败，请重新登录'))
             except:
                 return JSONResponse(fail(401, '用户验证失败，请重新登录'))
-

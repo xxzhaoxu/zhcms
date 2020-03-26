@@ -1,4 +1,5 @@
 import django_redis
+from django.contrib.auth.models import User
 from zhdb.models import User, BaseInfo, News, Job, Aptitudes, Banner, Product
 from zhCMS.common.ResultUtils import success, fail, page_handler
 from zhCMS.common.HttpUtils import JSONResponse
@@ -86,10 +87,12 @@ def save_update_news(request):
         create_time = time.time()
         img_url = request.POST.get('img_url', '')
         n_type = request.POST.get('n_type', '')
+        is_show = request.POST.get('is_show', '1')
+        is_del = request.POST.get('is_del', '0')
 
         pk = request.POST.get('pk')
         news = News(id=pk, title=title, content=content, author=author, create_time=create_time, img_url=img_url,
-                    n_type=n_type, is_show='1')
+                    n_type=n_type, is_show=is_show, is_del=is_del)
         news.save()
         return JSONResponse(success(news._toJSON()))
     else:
@@ -98,10 +101,13 @@ def save_update_news(request):
 
 def find_news(request):
     if 'POST' == request.method:
-        # print(request.POST['type'])
-        print(request.POST.get('type'))
+        page_index = request.POST.get('pageIndex', 1)
+        page_size = request.POST.get('pageSize', 3)
         n_type = request.POST.get('type', '1')
-        return JSONResponse(success(News.objects.filter(n_type=n_type, is_show='1').order_by('-create_time')))
+        news_list = News.objects.filter(n_type=n_type, is_show='1', is_del='0').order_by('-create_time')
+        count = News.objects.filter(n_type=n_type, is_show='1', is_del='0').order_by('-create_time').count()
+        paginator = Paginator(news_list, page_size)
+        return JSONResponse(page_handler(count, paginator.num_pages, int(page_index), news_list))
     else:
         return JSONResponse(fail(500, "请求方式错误"))
 
@@ -120,9 +126,8 @@ def delete_news(request):
             news = News.objects.get(id=request.POST.get('id'))
         except:
             return JSONResponse(fail(400, '参数错误'))
-        if news is not None:
-            news.is_show = request.POST.get('is_show', '0')
-            news.save()
+        news.is_del = '1'
+        news.save()
         return JSONResponse(success(news._toJSON()))
     else:
         return JSONResponse(fail(500, "请求方式错误"))
@@ -303,8 +308,8 @@ def find_aptitudes(request):
 def save_update_banner(request):
     if 'POST' == request.method:
         pk = request.POST.get('id')
-        urls = request.POST.get('urls')
-        name = request.POST.get('name')
+        urls = request.POST.get('urls', '')
+        name = request.POST.get('name', '')
         create_time = request.POST.get('create_time', time.time())
         banner = Banner(id=pk, name=name, urls=urls, create_time=create_time)
         banner.save()
@@ -329,15 +334,27 @@ def find_all_banner(request):
         return JSONResponse(fail(500, '请求方式错误'))
 
 
+def del_banner(request):
+    if 'POST' == request.method:
+        try:
+            Banner.delete(request.POST.get('id'))
+            return JSONResponse(success(None))
+        except:
+            return JSONResponse(fail(400, '删除失败'))
+    else:
+        return JSONResponse(fail(500, '请求方式错误'))
+
+
 def save_product(request):
     if 'POST' == request.method:
         pk = request.POST.get('id')
         name = request.POST.get('name')
         content = request.POST.get('content')
         img_urls = request.POST.get('img_urls')
-        banner_id = request.POST.get('banner_id')
+        aptitudes_id = request.POST.get('aptitudes_id')
         create_time = request.POST.get('create_time', time.time())
-        p = Product(id=pk, name=name, content=content, img_urls=img_urls, banner_id=banner_id, create_time=create_time)
+        p = Product(id=pk, name=name, content=content, img_urls=img_urls, aptitudes_id=aptitudes_id,
+                    create_time=create_time)
         p.save()
         return JSONResponse(success(p._toJSON()))
     else:
@@ -360,9 +377,13 @@ def find_product(request):
     if 'GET' == request.method:
         page_index = request.GET['pageIndex']
         page_size = request.GET['pageSize']
-        banner_id = request.GET['banner_id']
-        product_count = Product.objects.count()
-        product_list = Product.objects.filter(banner_id=banner_id)
+        aptitudes_id = request.GET['aptitudes_id']
+        if None is aptitudes_id:
+            product_list = Product.objects.all()
+            product_count = Product.objects.all().count()
+        else:
+            product_count = Product.objects.count()
+            product_list = Product.objects.filter(aptitudes_id=aptitudes_id)
         paginator = Paginator(product_list, page_size)
         try:
             product_list = paginator.page(int(page_index))

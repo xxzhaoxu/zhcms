@@ -55,6 +55,7 @@ class News(models.Model):
     img_url = models.CharField(max_length=255)  # 图片路径
     n_type = models.CharField(max_length=1)  # 类型 0 新闻 1公告 2中标信息
     is_show = models.CharField(max_length=1, null=True, verbose_name='1')  # 是否显示 0不显示 1显示
+    is_del = models.CharField(max_length=1, null=True) # 是否删除， 0 正常 1删除
 
     def _toJSON(self):
         return {
@@ -129,7 +130,7 @@ class Aptitudes(models.Model):
         }
 
 
-class Banner(models.Model):
+class Banner(models.Model):  # 轮播图
     id = models.AutoField(primary_key=True)
     urls = models.CharField(max_length=255)
     name = models.CharField(max_length=255, null=True)
@@ -150,7 +151,7 @@ class Product(models.Model):
     content = models.TextField()
     img_urls = models.CharField(max_length=255)
     create_time = models.IntegerField()
-    banner_id = models.IntegerField()
+    aptitudes_id = models.IntegerField()
 
     def _toJSON(self):
         return {
@@ -159,5 +160,5 @@ class Product(models.Model):
             'content': self.content,
             'img_urls': self.img_urls,
             'create_time': self.create_time,
-            'banner_id': self.banner_id,
+            'aptitudes_id': self.aptitudes_id,
         }
