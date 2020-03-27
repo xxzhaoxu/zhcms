@@ -89,7 +89,6 @@ def save_update_news(request):
         n_type = request.POST.get('n_type', '')
         is_show = request.POST.get('is_show', '1')
         is_del = request.POST.get('is_del', '0')
-
         pk = request.POST.get('pk')
         news = News(id=pk, title=title, content=content, author=author, create_time=create_time, img_url=img_url,
                     n_type=n_type, is_show=is_show, is_del=is_del)
@@ -103,9 +102,13 @@ def find_news(request):
     if 'POST' == request.method:
         page_index = request.POST.get('pageIndex', 1)
         page_size = request.POST.get('pageSize', 3)
-        n_type = request.POST.get('type', '1')
-        news_list = News.objects.filter(n_type=n_type, is_show='1', is_del='0').order_by('-create_time')
-        count = News.objects.filter(n_type=n_type, is_show='1', is_del='0').order_by('-create_time').count()
+        n_type = request.POST.get('type', '0')
+        is_show = request.POST.get('isShow', '0')
+        news_list = News.objects.filter(n_type=n_type,  is_del='0').order_by('-create_time')
+        count = News.objects.filter(n_type=n_type, is_del='0').order_by('-create_time').count()
+        if is_show == '1':
+            count = news_list.filter(is_show='1').count()
+            news_list = news_list.filter(is_show='1')
         paginator = Paginator(news_list, page_size)
         return JSONResponse(page_handler(count, paginator.num_pages, int(page_index), news_list))
     else:
@@ -195,11 +198,9 @@ def update_job(request):
         phone = request.POST.get('phone', '')
         email = request.POST.get('email', '')
         address = request.POST.get('address', '')
-        valid_time = request.POST.get('valid_time', '')
+        valid_time = request.POST.get('valid_time', time.time())
         pk = request.POST.get('id', '')
         is_show = request.POST.get('is_show', '')
-        import time
-
         try:
             job = Job.objects.get(id=pk)
             if '' is not job_name:
@@ -269,6 +270,18 @@ def find_jobs_by_id(request):
         return JSONResponse(fail(500, '请求方式错误'))
 
 
+def del_job(request):
+    if 'POST' == request.method:
+        pk = request.POST.get('id')
+        try:
+            job = Job.objects.get(id=pk)
+            job.delete()
+            return JSONResponse(success(None))
+        except:
+            return JSONResponse(fail(400, '删除失败'))
+
+    else:
+        return JSONResponse(fail(500, '请求方式错误'))
 '''
 保存资质
 '''
@@ -374,15 +387,15 @@ def del_product(request):
 
 
 def find_product(request):
-    if 'GET' == request.method:
-        page_index = request.GET['pageIndex']
-        page_size = request.GET['pageSize']
-        aptitudes_id = request.GET['aptitudes_id']
+    if 'POST' == request.method:
+        page_index = request.POST.get('pageIndex', 1)
+        page_size = request.POST.get('pageSize', 100)
+        aptitudes_id = request.POST.get('aptitudes_id')
         if None is aptitudes_id:
             product_list = Product.objects.all()
             product_count = Product.objects.all().count()
         else:
-            product_count = Product.objects.count()
+            product_count = Product.objects.filter(aptitudes_id=aptitudes_id).count()
             product_list = Product.objects.filter(aptitudes_id=aptitudes_id)
         paginator = Paginator(product_list, page_size)
         try:
@@ -403,13 +416,3 @@ def find_product_by_id(request):
         return JSONResponse(success(p._toJSON()))
     else:
         return JSONResponse(fail(500, '请求方式错误'))
-
-
-def upload_file_access(request):
-    access_key_secret = '5X4UABmuPea7ezcRZJlaJ2jrzDgJa4'
-    AccessKey_id = 'LTAI4Fe3jW3nuySSKkGPVC6Z'
-    auth = oss2.Auth(AccessKey_id, access_key_secret)
-    bucket = oss2.Bucket(auth, 'http://oss-cn-hangzhou.aliyuncs.com', 'zhenh')
-    # bucket.create_bucket(oss2.models.BUCKET_ACL_PRIVATE)
-    print(bucket.sign_url('GET', '<yourObjectName>', 60))
-    return JSONResponse(success(bucket.sign_url('GET', 'zhenh', 60)))
