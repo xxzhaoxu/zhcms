@@ -351,7 +351,7 @@ def find_all_banner(request):
 def del_banner(request):
     if 'POST' == request.method:
         try:
-            Banner.objects.get(request.POST.get('id')).delete()
+            Banner.objects.get(id=request.POST.get('id')).delete()
             return JSONResponse(success(None))
         except:
             return JSONResponse(fail(400, '删除失败'))
