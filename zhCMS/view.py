@@ -104,8 +104,9 @@ def find_news(request):
         page_size = request.POST.get('pageSize', 3)
         n_type = request.POST.get('type', '0')
         is_show = request.POST.get('isShow', '0')
-        news_list = News.objects.filter(n_type=n_type,  is_del='0').order_by('-create_time')
-        count = News.objects.filter(n_type=n_type, is_del='0').order_by('-create_time').count()
+        title = request.POST.get('title', '')
+        news_list = News.objects.filter(n_type=n_type,  is_del='0', title__icontains=title).order_by('-create_time')
+        count = News.objects.filter(n_type=n_type, is_del='0', title__icontains=title).order_by('-create_time').count()
         if is_show == '1':
             count = news_list.filter(is_show='1').count()
             news_list = news_list.filter(is_show='1')
@@ -350,7 +351,7 @@ def find_all_banner(request):
 def del_banner(request):
     if 'POST' == request.method:
         try:
-            Banner.delete(request.POST.get('id'))
+            Banner.objects.get(request.POST.get('id')).delete()
             return JSONResponse(success(None))
         except:
             return JSONResponse(fail(400, '删除失败'))
