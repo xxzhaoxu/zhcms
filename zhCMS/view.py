@@ -251,8 +251,9 @@ def find_jobs(request):
     if 'POST' == request.method:
         page_size = request.POST.get('pageSize', 3)
         page_index = request.POST.get('pageIndex', 1)
-        job_list = Job.objects.all()
-        count = Job.objects.count()
+        job_name = request.POST.get('job_name', '')
+        job_list = Job.objects.filter(job_name__contains=job_name)
+        count = Job.objects.filter(job_name__contains=job_name).count()
         paginator = Paginator(job_list, page_size)
         try:
             job_list = paginator.page(int(page_index))
@@ -392,12 +393,13 @@ def find_product(request):
         page_index = request.POST.get('pageIndex', 1)
         page_size = request.POST.get('pageSize', 100)
         aptitudes_id = request.POST.get('aptitudes_id')
+        name = request.POST.get('name')
         if None is aptitudes_id:
-            product_list = Product.objects.all()
-            product_count = Product.objects.all().count()
+            product_list = Product.objects.filter(name__contains=name)
+            product_count = Product.objects.filter(name__contains=name).count()
         else:
-            product_count = Product.objects.filter(aptitudes_id=aptitudes_id).count()
-            product_list = Product.objects.filter(aptitudes_id=aptitudes_id)
+            product_count = Product.objects.filter(aptitudes_id=aptitudes_id, name__contains=name).count()
+            product_list = Product.objects.filter(aptitudes_id=aptitudes_id, name__contains=name)
         paginator = Paginator(product_list, page_size)
         try:
             product_list = paginator.page(int(page_index))
