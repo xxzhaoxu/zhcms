@@ -393,7 +393,7 @@ def find_product(request):
         page_index = request.POST.get('pageIndex', 1)
         page_size = request.POST.get('pageSize', 100)
         aptitudes_id = request.POST.get('aptitudes_id')
-        name = request.POST.get('name')
+        name = request.POST.get('name', '')
         if None is aptitudes_id:
             product_list = Product.objects.filter(name__contains=name)
             product_count = Product.objects.filter(name__contains=name).count()
