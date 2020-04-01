@@ -52,10 +52,11 @@ class News(models.Model):
     content = models.TextField()  # 内容
     author = models.CharField(max_length=50)  # 作者
     create_time = models.IntegerField()  # 创建时间
+    shot_time = models.IntegerField(null=True)  # 中标时间
     img_url = models.CharField(max_length=255)  # 图片路径
     n_type = models.CharField(max_length=1)  # 类型 0 新闻 1公告 2中标信息
     is_show = models.CharField(max_length=1, null=True, verbose_name='1')  # 是否显示 0不显示 1显示
-    is_del = models.CharField(max_length=1, null=True) # 是否删除， 0 正常 1删除
+    is_del = models.CharField(max_length=1, null=True)  # 是否删除， 0 正常 1删除
 
     def _toJSON(self):
         return {
@@ -64,6 +65,7 @@ class News(models.Model):
             'content': self.content,
             'author': self.author,
             'create_time': self.create_time,
+            'shot_time': self.shot_time,
             'img_url': self.img_url,
             'n_type': self.n_type,
             'is_show': self.is_show

@@ -85,13 +85,14 @@ def save_update_news(request):
         content = request.POST.get('content', '')
         author = request.POST.get('author', '')
         create_time = time.time()
+        shot_time = request.POST.get('shot_time', 0)
         img_url = request.POST.get('img_url', '')
         n_type = request.POST.get('n_type', '')
         is_show = request.POST.get('is_show', '1')
         is_del = request.POST.get('is_del', '0')
         pk = request.POST.get('pk')
-        news = News(id=pk, title=title, content=content, author=author, create_time=create_time, img_url=img_url,
-                    n_type=n_type, is_show=is_show, is_del=is_del)
+        news = News(id=pk, title=title, content=content, author=author, create_time=create_time, shot_time=shot_time,
+                    img_url=img_url, n_type=n_type, is_show=is_show, is_del=is_del)
         news.save()
         return JSONResponse(success(news._toJSON()))
     else:
@@ -105,8 +106,8 @@ def find_news(request):
         n_type = request.POST.get('type', '0')
         is_show = request.POST.get('isShow', '0')
         title = request.POST.get('title', '')
-        news_list = News.objects.filter(n_type=n_type,  is_del='0', title__icontains=title).order_by('-create_time')
-        count = News.objects.filter(n_type=n_type, is_del='0', title__icontains=title).order_by('-create_time').count()
+        news_list = News.objects.filter(n_type=n_type,  is_del='0', title__icontains=title).order_by('-shot_time').order_by('-create_time')
+        count = News.objects.filter(n_type=n_type, is_del='0', title__icontains=title).order_by('-shot_time').count()
         if is_show == '1':
             count = news_list.filter(is_show='1').count()
             news_list = news_list.filter(is_show='1')
