@@ -405,8 +405,8 @@ def find_product(request):
             product_list = Product.objects.filter(name__contains=name)
             product_count = Product.objects.filter(name__contains=name).count()
         else:
-            product_count = Product.objects.filter(aptitudes_id=pro_type, name__contains=name).count()
-            product_list = Product.objects.filter(aptitudes_id=pro_type, name__contains=name)
+            product_count = Product.objects.filter(pro_type=pro_type, name__contains=name).count()
+            product_list = Product.objects.filter(pro_type=pro_type, name__contains=name)
         paginator = Paginator(product_list, page_size)
         try:
             product_list = paginator.page(int(page_index))

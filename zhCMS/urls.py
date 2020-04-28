@@ -45,4 +45,7 @@ urlpatterns = [
     url(r'^find_product_by_id$', view.find_product_by_id),
     url(r'^del_job$', view.del_job),
     url(r'^find_product_type$', view.find_product_type),
+
+
+
 ]
