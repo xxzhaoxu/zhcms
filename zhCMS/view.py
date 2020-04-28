@@ -401,7 +401,7 @@ def find_product(request):
         page_size = request.POST.get('pageSize', 100)
         pro_type = request.POST.get('pro_type')
         name = request.POST.get('name', '')
-        if None is pro_type:
+        if None is pro_type or '' is pro_type:
             product_list = Product.objects.filter(name__contains=name)
             product_count = Product.objects.filter(name__contains=name).count()
         else:
