@@ -150,7 +150,9 @@ class Banner(models.Model):  # 轮播图
 class Product(models.Model):
     id = models.AutoField(primary_key=True)
     name = models.CharField(max_length=255)
-    content = models.TextField()
+    pro_type = models.CharField(max_length=255)
+    company = models.CharField(max_length=255)
+    address = models.CharField(max_length=255)
     img_urls = models.CharField(max_length=255)
     create_time = models.IntegerField()
     aptitudes_id = models.IntegerField()
@@ -159,7 +161,9 @@ class Product(models.Model):
         return {
             'id': self.id,
             'name': self.name,
-            'content': self.content,
+            'address': self.address,
+            'company': self.company,
+            'pro_type': self.pro_type,
             'img_urls': self.img_urls,
             'create_time': self.create_time,
             'aptitudes_id': self.aptitudes_id,

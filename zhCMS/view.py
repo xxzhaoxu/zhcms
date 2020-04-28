@@ -1,5 +1,8 @@
 import django_redis
 from django.contrib.auth.models import User
+from django.db.models import Count, QuerySet
+from django.db.models.functions import Concat
+
 from zhdb.models import User, BaseInfo, News, Job, Aptitudes, Banner, Product
 from zhCMS.common.ResultUtils import success, fail, page_handler
 from zhCMS.common.HttpUtils import JSONResponse
@@ -106,7 +109,8 @@ def find_news(request):
         n_type = request.POST.get('type', '0')
         is_show = request.POST.get('isShow', '0')
         title = request.POST.get('title', '')
-        news_list = News.objects.filter(n_type=n_type,  is_del='0', title__icontains=title).order_by('-shot_time').order_by('-create_time')
+        news_list = News.objects.filter(n_type=n_type, is_del='0', title__icontains=title).order_by(
+            '-shot_time').order_by('-create_time')
         count = News.objects.filter(n_type=n_type, is_del='0', title__icontains=title).order_by('-shot_time').count()
         if is_show == '1':
             count = news_list.filter(is_show='1').count()
@@ -285,6 +289,8 @@ def del_job(request):
 
     else:
         return JSONResponse(fail(500, '请求方式错误'))
+
+
 '''
 保存资质
 '''
@@ -393,14 +399,14 @@ def find_product(request):
     if 'POST' == request.method:
         page_index = request.POST.get('pageIndex', 1)
         page_size = request.POST.get('pageSize', 100)
-        aptitudes_id = request.POST.get('aptitudes_id')
+        pro_type = request.POST.get('pro_type')
         name = request.POST.get('name', '')
-        if None is aptitudes_id:
+        if None is pro_type:
             product_list = Product.objects.filter(name__contains=name)
             product_count = Product.objects.filter(name__contains=name).count()
         else:
-            product_count = Product.objects.filter(aptitudes_id=aptitudes_id, name__contains=name).count()
-            product_list = Product.objects.filter(aptitudes_id=aptitudes_id, name__contains=name)
+            product_count = Product.objects.filter(aptitudes_id=pro_type, name__contains=name).count()
+            product_list = Product.objects.filter(aptitudes_id=pro_type, name__contains=name)
         paginator = Paginator(product_list, page_size)
         try:
             product_list = paginator.page(int(page_index))
@@ -415,6 +421,23 @@ def find_product_by_id(request):
     if 'POST' == request.method:
         try:
             p = Product.objects.get(id=request.POST.get('id'))
+        except:
+            return JSONResponse(success(None))
+        return JSONResponse(success(p._toJSON()))
+    else:
+        return JSONResponse(fail(500, '请求方式错误'))
+
+
+def find_product_type(request):
+    if 'POST' == request.method:
+        pro_type = request.POST.get('pro_type')
+        print(pro_type)
+        # query = Product.objects.
+        # query.group_by = ['pro_type']
+        # pro_list = QuerySet(query=query, model=Product)
+        # return JSONResponse(success(query))
+        try:
+            p = Product.objects.values('pro_type').annotate(pro_type=Count('pro_type'))
         except:
             return JSONResponse(success(None))
         return JSONResponse(success(p._toJSON()))
