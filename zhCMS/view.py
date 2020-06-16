@@ -1,15 +1,12 @@
 import django_redis
 from django.contrib.auth.models import User
-from django.db.models import Count, QuerySet
-from django.db.models.functions import Concat
-
+from django.db.models import Count
 from zhdb.models import User, BaseInfo, News, Job, Aptitudes, Banner, Product
 from zhCMS.common.ResultUtils import success, fail, page_handler
 from zhCMS.common.HttpUtils import JSONResponse
 from zhCMS.common.AESUtils import encrypt_oracle
-from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
+from django.core.paginator import Paginator
 import time
-import oss2
 
 
 def hello(request):
