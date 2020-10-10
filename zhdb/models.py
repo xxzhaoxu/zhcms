@@ -149,10 +149,10 @@ class Banner(models.Model):  # 轮播图
 
 class Product(models.Model):
     id = models.AutoField(primary_key=True)
-    name = models.CharField(max_length=255)
-    pro_type = models.CharField(max_length=255)
-    company = models.CharField(max_length=255)
-    address = models.CharField(max_length=255)
+    name = models.CharField(max_length=255, default="")
+    pro_type = models.CharField(max_length=255, default="")
+    company = models.CharField(max_length=255, default="")
+    address = models.CharField(max_length=255, default="")
     img_urls = models.CharField(max_length=255)
     create_time = models.IntegerField()
     aptitudes_id = models.IntegerField()
@@ -168,3 +168,25 @@ class Product(models.Model):
             'create_time': self.create_time,
             'aptitudes_id': self.aptitudes_id,
         }
+
+
+class MessageData(models.Model):
+        id = models.AutoField(primary_key=True)
+        name = models.CharField(max_length=255)
+        phone = models.CharField(max_length=255)
+        m_address = models.CharField(max_length=255)
+        msg = models.CharField(max_length=255)
+        stats = models.CharField(max_length=255)
+        create_time = models.IntegerField()
+
+        def _toJSON(self):
+            return {
+                'id': self.id,
+                'name': self.name,
+                'm_address': self.m_address,
+                'phone': self.phone,
+                'msg': self.msg,
+                'create_time': self.create_time,
+                'stats': self.stats,
+
+            }

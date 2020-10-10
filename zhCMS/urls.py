@@ -45,6 +45,9 @@ urlpatterns = [
     url(r'^find_product_by_id$', view.find_product_by_id),
     url(r'^del_job$', view.del_job),
     url(r'^find_product_type$', view.find_product_type),
+    url(r'^find_message_list$', view.find_message_list),
+    url(r'^save_message$', view.save_message),
+    url(r'^update_message_status$', view.update_message_status),
 
 
 

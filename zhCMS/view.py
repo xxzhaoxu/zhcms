@@ -1,7 +1,7 @@
 import django_redis
 from django.contrib.auth.models import User
 from django.db.models import Count
-from zhdb.models import User, BaseInfo, News, Job, Aptitudes, Banner, Product
+from zhdb.models import User, BaseInfo, News, Job, Aptitudes, Banner, Product, MessageData
 from zhCMS.common.ResultUtils import success, fail, page_handler
 from zhCMS.common.HttpUtils import JSONResponse
 from zhCMS.common.AESUtils import encrypt_oracle
@@ -438,5 +438,62 @@ def find_product_type(request):
         except:
             return JSONResponse(success(None))
         return JSONResponse(success(p._toJSON()))
+    else:
+        return JSONResponse(fail(500, '请求方式错误'))
+
+
+def save_message(request):
+    if 'POST' == request.method:
+        name = request.POST.get('name')
+        phone = request.POST.get('phone')
+        address = request.POST.get('address')
+        msg = request.POST.get('msg')
+        if name is None:
+            return JSONResponse(fail(400, "名字不能为空"))
+        if phone is None:
+            return JSONResponse(fail(400, "电话不能为空"))
+        if address is None:
+            return JSONResponse(fail(400, "地址不能为空"))
+        if msg is None:
+            return JSONResponse(fail(400, "留言不能为空"))
+        message = MessageData(name=name, phone=phone, m_address=address, msg=msg, create_time=time.time(), stats='0')
+        message.save()
+        return JSONResponse(success(None))
+    else:
+        return JSONResponse(fail(500, '请求方式错误'))
+
+
+def find_message_list(request):
+    if 'GET' == request.method:
+        page_index = request.GET.get('pageIndex', 1)
+        page_size = request.GET.get('pageSize', 10)
+        start_time = request.GET.get('startTime', 0)
+        end_time = request.GET.get('endTime', time.time())
+        try:
+            message_count = MessageData.objects.filter(create_time__gte=start_time, create_time__lte=end_time).count()
+            message_list = MessageData.objects.filter(create_time__gte=start_time, create_time__lte=end_time).order_by(
+                "-create_time")
+        except Exception as e:
+            print(e)
+            return JSONResponse(success(None))
+        paginator = Paginator(message_list, page_size)
+        try:
+            message_list = paginator.page(int(page_index))
+        except:
+            product_list = []
+
+        return JSONResponse(page_handler(message_count, paginator.num_pages, int(page_index), message_list))
+    else:
+        return JSONResponse(fail(500, '请求方式错误'))
+
+
+def update_message_status(request):
+    if 'POST' == request.method:
+        id = request.POST.get("id")
+        if id is not None:
+            message = MessageData.objects.get(id=id)
+            message.stats = '1'
+            message.save()
+            return JSONResponse(success(None))
     else:
         return JSONResponse(fail(500, '请求方式错误'))

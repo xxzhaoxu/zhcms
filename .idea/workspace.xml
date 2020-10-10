@@ -1,10 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="a9a2df39-2d88-4272-95b6-d062baf04372" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/zhdb/migrations/0013_product.py" afterDir="false" />
+    <list default="true" id="a9a2df39-2d88-4272-95b6-d062baf04372" name="Default Changelist" comment="登录调整">
+      <change afterPath="$PROJECT_DIR$/zhdb/migrations/0014_news_is_del.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/zhdb/migrations/0015_auto_20200326_0809.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/zhdb/migrations/0016_news_shot_time.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/zhdb/migrations/0017_auto_20201010_0139.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/zhCMS/settings.py" beforeDir="false" afterPath="$PROJECT_DIR$/zhCMS/settings.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/zhCMS/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/zhCMS/urls.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/zhCMS/view.py" beforeDir="false" afterPath="$PROJECT_DIR$/zhCMS/view.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/zhdb/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/zhdb/models.py" afterDir="false" />
@@ -21,8 +23,8 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
-        <option value="Python Script" />
         <option value="HTML File" />
+        <option value="Python Script" />
       </list>
     </option>
   </component>
@@ -38,6 +40,7 @@
     <property name="DefaultHtmlFileTemplate" value="HTML File" />
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="node.js.detected.package.eslint" value="true" />
     <property name="node.js.detected.package.tslint" value="true" />
     <property name="node.js.path.for.package.eslint" value="project" />
@@ -84,6 +87,28 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
+    <configuration name="Pa" type="PythonConfigurationType" factoryName="Python" temporary="true">
+      <module name="zhCMS" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$USER_HOME$/Library/Containers/com.tencent.xinWeChat/Data/Library/Application Support/com.tencent.xinWeChat/2.0b4.0.9/c74cfc6f1fc1e74583e880e5f3615699/Message/MessageTemp/d657a3da8c6ba6c650fb7a9a8767b9da/File" />
+      <option name="IS_MODULE_SDK" value="false" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="SCRIPT_NAME" value="$USER_HOME$/Library/Containers/com.tencent.xinWeChat/Data/Library/Application Support/com.tencent.xinWeChat/2.0b4.0.9/c74cfc6f1fc1e74583e880e5f3615699/Message/MessageTemp/d657a3da8c6ba6c650fb7a9a8767b9da/File/Pa.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
     <configuration name="zhCMS" type="Python.DjangoServer" factoryName="Django server">
       <module name="zhCMS" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -110,11 +135,13 @@
     </configuration>
     <list>
       <item itemvalue="Django server.zhCMS" />
-      <item itemvalue="Python.AESUtils" />
       <item itemvalue="JavaScript Debug.test.html" />
+      <item itemvalue="Python.AESUtils" />
+      <item itemvalue="Python.Pa" />
     </list>
     <recent_temporary>
       <list>
+        <item itemvalue="Python.Pa" />
         <item itemvalue="JavaScript Debug.test.html" />
         <item itemvalue="Python.AESUtils" />
       </list>
@@ -132,8 +159,116 @@
       <updated>1584275337937</updated>
       <workItem from="1584275500838" duration="5630000" />
       <workItem from="1584406179617" duration="66256000" />
-      <workItem from="1584758638438" duration="20944000" />
+      <workItem from="1584758638438" duration="37782000" />
+      <workItem from="1585225149034" duration="569000" />
+      <workItem from="1585269758990" duration="15053000" />
+      <workItem from="1585728923500" duration="2104000" />
+      <workItem from="1585880304861" duration="647000" />
+      <workItem from="1588054924847" duration="5428000" />
+      <workItem from="1591940706799" duration="1491000" />
+      <workItem from="1592295462256" duration="711000" />
+      <workItem from="1598666074236" duration="309000" />
+      <workItem from="1602237064385" duration="9921000" />
     </task>
+    <task id="LOCAL-00001" summary="1">
+      <created>1585120838663</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1585120838663</updated>
+    </task>
+    <task id="LOCAL-00002" summary="1">
+      <created>1585123442720</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1585123442720</updated>
+    </task>
+    <task id="LOCAL-00003" summary="登录调整">
+      <created>1585125928588</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1585125928588</updated>
+    </task>
+    <task id="LOCAL-00004" summary="登录调整">
+      <created>1585225227469</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1585225227469</updated>
+    </task>
+    <task id="LOCAL-00005" summary="登录调整">
+      <created>1585298356460</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1585298356460</updated>
+    </task>
+    <task id="LOCAL-00006" summary="删除轮播图">
+      <created>1585452173642</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1585452173642</updated>
+    </task>
+    <task id="LOCAL-00007" summary="删除轮播图1">
+      <created>1585452809880</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1585452809880</updated>
+    </task>
+    <task id="LOCAL-00008" summary="模糊查询2">
+      <created>1585540566722</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1585540566723</updated>
+    </task>
+    <task id="LOCAL-00009" summary="find_product 修改">
+      <created>1585549542651</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1585549542651</updated>
+    </task>
+    <task id="LOCAL-00010" summary="完成中标信息">
+      <created>1585730564828</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1585730564828</updated>
+    </task>
+    <task id="LOCAL-00011" summary="业绩调整">
+      <created>1588058702970</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1588058702970</updated>
+    </task>
+    <task id="LOCAL-00012" summary="登录调整">
+      <created>1588060162805</created>
+      <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL-00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1588060162805</updated>
+    </task>
+    <task id="LOCAL-00013" summary="登录调整">
+      <created>1588060722681</created>
+      <option name="number" value="00013" />
+      <option name="presentableId" value="LOCAL-00013" />
+      <option name="project" value="LOCAL" />
+      <updated>1588060722681</updated>
+    </task>
+    <task id="LOCAL-00014" summary="删除AccessKey">
+      <created>1592271222357</created>
+      <option name="number" value="00014" />
+      <option name="presentableId" value="LOCAL-00014" />
+      <option name="project" value="LOCAL" />
+      <updated>1592271222358</updated>
+    </task>
+    <option name="localTasksCounter" value="15" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -154,8 +289,29 @@
   </component>
   <component name="VcsManagerConfiguration">
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
+    <MESSAGE value="1" />
+    <MESSAGE value="删除轮播图" />
+    <MESSAGE value="删除轮播图1" />
+    <MESSAGE value="模糊查询2" />
+    <MESSAGE value="find_product 修改" />
+    <MESSAGE value="完成中标信息" />
+    <MESSAGE value="业绩调整" />
+    <MESSAGE value="登录调整" />
+    <MESSAGE value="删除AccessKey" />
+    <option name="LAST_COMMIT_MESSAGE" value="删除AccessKey" />
+  </component>
+  <component name="XDebuggerManager">
+    <watches-manager>
+      <configuration name="Python.DjangoServer">
+        <watch expression="len(obj)" language="Python" />
+        <watch expression="obj[0]" language="Python" />
+        <watch expression="type(obj[0])" language="Python" />
+        <watch expression="serializers.serialize(&quot;json&quot;, obj[0])" language="Python" />
+      </configuration>
+    </watches-manager>
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
+    <SUITE FILE_PATH="coverage/zhCMS$Pa.coverage" NAME="Pa Coverage Results" MODIFIED="1602298322074" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$USER_HOME$/Library/Containers/com.tencent.xinWeChat/Data/Library/Application Support/com.tencent.xinWeChat/2.0b4.0.9/c74cfc6f1fc1e74583e880e5f3615699/Message/MessageTemp/d657a3da8c6ba6c650fb7a9a8767b9da/File" />
     <SUITE FILE_PATH="coverage/zhCMS$AESUtils.coverage" NAME="AESUtils Coverage Results" MODIFIED="1584588641403" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/zhCMS/common" />
   </component>
 </project>
